@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GAN HAÏ™ · Entrer dans le Temps</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500&family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    min-height: 100vh;
+    background: #F5F5F7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'EB Garamond', Georgia, serif;
+  }
+  .stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2.5rem 1.5rem;
+    width: 100%;
+    max-width: 500px;
+    animation: rise 1.4s cubic-bezier(.22,1,.36,1) both;
+  }
+  @keyframes rise {
+    from { opacity:0; transform:translateY(20px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+  .logo-he {
+    background: #fff;
+    border-radius: 20px;
+    width: 96px;
+    height: 96px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,.12);
+    margin-bottom: 1.4rem;
+  }
+  .logo-he img {
+    width: 84px;
+    height: 84px;
+    object-fit: contain;
+    padding: 4px;
+  }
+  .card {
+    width: 100%;
+    background: #fff;
+    border: 1px solid rgba(0,0,0,.08);
+    border-radius: 22px;
+    padding: 2.4rem 2.2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 2px 20px rgba(0,0,0,.07);
+  }
+  .brand-name {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(38px, 7vw, 54px);
+    font-weight: 800;
+    letter-spacing: .14em;
+    color: #1D1D1F;
+    text-align: center;
+    line-height: 1;
+    margin-bottom: .45rem;
+  }
+  .brand-name sup {
+    font-size: .42em;
+    vertical-align: super;
+    font-weight: 700;
+    color: #1D1D1F;
+  }
+  .platform-sub {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(10px, 1.5vw, 12px);
+    font-weight: 400;
+    letter-spacing: .18em;
+    color: #86868B;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 1.8rem;
+  }
+  .sep { width:36px; height:1px; background:rgba(224,140,30,.50); margin:0 auto 1.8rem; }
+  .sep2 { width:36px; height:1px; background:rgba(224,140,30,.30); margin:0 auto 1.8rem; }
+  .inscription { text-align:center; margin-bottom:2rem; }
+  .inscription p {
+    font-size: clamp(17px, 2.6vw, 21px);
+    line-height: 1.90;
+    color: #1D1D1F;
+  }
+  .inscription .kw { color:#E08C1E; font-weight:500; }
+  .btn-enter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    background: #E08C1E;
+    color: #fff;
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: clamp(16px, 2.2vw, 18px);
+    letter-spacing: .06em;
+    padding: 15px 24px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: background .2s, transform .15s;
+    text-decoration: none;
+  }
+  .btn-enter:hover { background:#C97A10; transform:translateY(-2px); }
+  .btn-enter .arrow { font-size:18px; transition:transform .2s; }
+  .btn-enter:hover .arrow { transform:translateX(4px); }
+  .footer {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+  }
+  .footer-logo { width:56px; object-fit:contain; opacity:.40; }
+  .footer-text {
+    font-size: 11px;
+    letter-spacing: .12em;
+    color: #86868B;
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    text-align: center;
+  }
+  @media (max-width:480px) {
+    .card { padding:2rem 1.4rem 1.8rem; }
+    .inscription p { font-size:16px; }
+    .logo-he { width:82px; height:82px; }
+    .logo-he img { width:70px; height:70px; }
+  }
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div class="logo-he">
+    <img src="logo_he.png" alt="GAN HAÏ™">
+  </div>
+
+  <div class="card">
+    <div class="brand-name">G<span style="text-transform:lowercase">an</span>H<sup>™</sup></div>
+    <div class="platform-sub">Scientific Validation Platform™</div>
+    <div class="sep"></div>
+    <div class="inscription">
+      <p>Le Temps n'est pas qu'une donnée chronologique.</p>
+      <p>Il est désormais <span class="kw">Computationnel</span>,<br><span class="kw">Habitable</span> et <span class="kw">Transmissible</span>.</p>
+    </div>
+    <div class="sep2"></div>
+    <a class="btn-enter" href="svp.html">
+      Entrer dans le Temps
+      <span class="arrow">→</span>
+    </a>
+  </div>
+
+  <div class="footer">
+    <img class="footer-logo" src="logo_correia.png" alt="CorreIA LLC">
+    <div class="footer-text">Laboratoire R&D ✦ CorreIA LLC</div>
+  </div>
+
+</div>
+</body>
+</html>
