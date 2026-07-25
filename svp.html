@@ -59,6 +59,7 @@ body{background:var(--bg);font-family:'Segoe UI','EB Garamond',system-ui,sans-se
 .topbar-id{font-size:13px;color:rgba(255,255,255,.7);background:rgba(255,255,255,.08);padding:3px 12px;border-radius:20px}
 .topbar-logout{font-family:'EB Garamond',serif;font-size:14px;color:rgba(255,255,255,.5);background:none;border:.5px solid rgba(255,255,255,.2);padding:4px 14px;border-radius:20px;cursor:pointer;transition:all .15s}
 .topbar-logout:hover{color:#fff;border-color:rgba(255,255,255,.5)}
+.svp-lang-btn.active{background:rgba(255,255,255,.20)!important;color:#fff!important;border-color:rgba(255,255,255,.45)!important}
 
 /* ── SIDEBAR ── */
 .sidebar-section{padding:1.2rem .8rem .4rem}
@@ -1007,8 +1008,8 @@ body{background:var(--bg);font-family:'Segoe UI','EB Garamond',system-ui,sans-se
 
       <!-- Step 1: Token -->
       <div id="auth-step1">
-        <div class="auth-title">Accès Reviewer</div>
-        <div class="auth-sub">Entrez votre token d'invitation. Le système générera votre identité temporelle de session.</div>
+        <div class="auth-title" id="auth-title-el">Accès Reviewer</div>
+        <div class="auth-sub" id="auth-sub-el">Entrez votre token d'invitation. Le système générera votre identité temporelle de session.</div>
         <div class="form-group">
           <label class="form-label">Token d'invitation</label>
           <div style="display:flex;gap:8px">
@@ -1071,6 +1072,10 @@ body{background:var(--bg);font-family:'Segoe UI','EB Garamond',system-ui,sans-se
       <div class="topbar-spacer"></div>
       <div class="topbar-role" id="tb-role"></div>
       <div class="topbar-id" id="tb-id"></div>
+      <div style="display:flex;gap:0;background:rgba(255,255,255,.12);border-radius:16px;overflow:hidden;margin-right:8px">
+        <button class="svp-lang-btn topbar-logout" data-lang="fr" onclick="setLangSVP('fr')" style="padding:3px 10px;font-size:11px;font-weight:600;letter-spacing:.08em">FR</button>
+        <button class="svp-lang-btn topbar-logout" data-lang="en" onclick="setLangSVP('en')" style="padding:3px 10px;font-size:11px;font-weight:600;letter-spacing:.08em">EN</button>
+      </div>
       <button class="topbar-logout" onclick="goHome()" style="margin-right:4px">⌂ Dashboard</button>
       <button class="topbar-logout" onclick="goPublic()" style="margin-right:4px">← Accueil</button>
       <button class="topbar-logout" onclick="logout()">Déconnexion</button>
@@ -1105,9 +1110,9 @@ body{background:var(--bg);font-family:'Segoe UI','EB Garamond',system-ui,sans-se
         <!-- ── REVIEWER DASHBOARD ── -->
         <div class="page" id="p-reviewer-dashboard">
           <div class="page-header">
-            <div class="page-eyebrow">Reviewer · PR-2026-00042</div>
-            <div class="page-title">Tableau de bord</div>
-            <div class="page-sub">Bienvenue · Campagnes, rapports et certificats</div>
+            <div class="page-eyebrow" id="pe-dashboard">Reviewer · PR-2026-00042</div>
+            <div class="page-title" id="pt-dashboard">Tableau de bord</div>
+            <div class="page-sub" id="ps-dashboard">Bienvenue · Campagnes, rapports et certificats</div>
           </div>
           <div class="kpi-grid">
             <div class="kpi"><div class="kpi-val">1</div><div class="kpi-label">Campagne active</div></div>
@@ -1165,8 +1170,8 @@ body{background:var(--bg);font-family:'Segoe UI','EB Garamond',system-ui,sans-se
         <!-- ── LANCEMENT CAMPAGNE ── -->
         <div class="page" id="p-reviewer-new">
           <div class="page-header">
-            <div class="page-eyebrow">Nouvelle campagne</div>
-            <div class="page-title">Lancer l'évaluation</div>
+            <div class="page-eyebrow" id="pe-new">Nouvelle campagne</div>
+            <div class="page-title" id="pt-new">Lancer l'évaluation</div>
           </div>
           <div class="card" style="max-width:560px">
 
@@ -1528,8 +1533,8 @@ body{background:var(--bg);font-family:'Segoe UI','EB Garamond',system-ui,sans-se
         <!-- ── RAPPORT ── -->
         <div class="page" id="p-reviewer-report">
           <div class="page-header">
-            <div class="page-eyebrow">Peer Review Report™</div>
-            <div class="page-title">Rapport de campagne</div>
+            <div class="page-eyebrow" id="pe-report">Peer Review Report™</div>
+            <div class="page-title" id="pt-report">Rapport de campagne</div>
             <div class="page-sub">PS-20260714-0018 · GanH<sup style="font-size:.6em;vertical-align:super">™</sup> v2.0 · 26min14s</div>
           </div>
           <div class="alert alert-green" style="margin-bottom:1.5rem">
@@ -1550,12 +1555,7 @@ body{background:var(--bg);font-family:'Segoe UI','EB Garamond',system-ui,sans-se
             </div>
             <div class="card card-sm">
               <div class="sec-label" style="margin:0 0 .8rem">Résultats des tests</div>
-              <div style="font-size:15px;line-height:2.2">
-                <div style="display:flex;justify-content:space-between"><span>Test 1 · Déterminisme</span><span style="color:#4A4A4A">✓ 5m12s</span></div>
-                <div style="display:flex;justify-content:space-between"><span>Test 2 · Reproductibilité</span><span style="color:#4A4A4A">✓ 7m33s</span></div>
-                <div style="display:flex;justify-content:space-between"><span>Test 3 · Traçabilité</span><span style="color:#4A4A4A">✓ 8m05s</span></div>
-                <div style="display:flex;justify-content:space-between"><span>Test 4 · Propagation</span><span style="color:#4A4A4A">✓ 5m24s</span></div>
-              </div>
+              <div id="report-tests-list" style="font-size:15px;line-height:2.2"></div>
             </div>
           </div>
           <!-- TRA™ · Théorie de la Relativité de l'Appréciation -->
@@ -1649,8 +1649,8 @@ body{background:var(--bg);font-family:'Segoe UI','EB Garamond',system-ui,sans-se
         <!-- ── CERTIFICAT ── -->
         <div class="page" id="p-reviewer-cert">
           <div class="page-header">
-            <div class="page-eyebrow">Peer Review Certificate™</div>
-            <div class="page-title">Certificat d'évaluation</div>
+            <div class="page-eyebrow" id="pe-cert">Peer Review Certificate™</div>
+            <div class="page-title" id="pt-cert">Certificat d'évaluation</div>
           </div>
           <div style="max-width:560px">
             <div class="cert-card">
@@ -1684,9 +1684,9 @@ body{background:var(--bg);font-family:'Segoe UI','EB Garamond',system-ui,sans-se
         <!-- ── HISTORIQUE SESSIONS ── -->
         <div class="page" id="p-reviewer-history">
           <div class="page-header">
-            <div class="page-eyebrow">Reviewer · PR-2026-00042</div>
-            <div class="page-title">Historique des sessions</div>
-            <div class="page-sub">Toutes les campagnes · Données persistées localement</div>
+            <div class="page-eyebrow" id="pe-hist">Reviewer · PR-2026-00042</div>
+            <div class="page-title" id="pt-hist">Historique des sessions</div>
+            <div class="page-sub" id="ps-hist">Toutes les campagnes · Données persistées localement</div>
           </div>
           <div class="alert alert-navy" style="margin-bottom:1.5rem">
             <span>◎</span>
@@ -1714,9 +1714,9 @@ body{background:var(--bg);font-family:'Segoe UI','EB Garamond',system-ui,sans-se
         <!-- ── SCIENTIFIC FOUNDATIONS™ · TRTV™ ── -->
         <div class="page" id="p-sci-foundations">
           <div class="page-header">
-            <div class="page-eyebrow">Référentiel scientifique · GanH<sup style="font-size:.6em;vertical-align:super">™</sup></div>
-            <div class="page-title">Scientific Foundations™</div>
-            <div class="page-sub">TRTV™ · Théorie de la Relativité du Temps Vécu™ · Cadre théorique de GanH<sup style="font-size:.6em;vertical-align:super">™</sup></div>
+            <div class="page-eyebrow" id="pe-found">Référentiel scientifique · GanH<sup style="font-size:.6em;vertical-align:super">™</sup></div>
+            <div class="page-title" id="pt-found">Scientific Foundations™</div>
+            <div class="page-sub" id="ps-found">TRTV™ · Théorie de la Relativité du Temps Vécu™ · Cadre théorique de GanH<sup style="font-size:.6em;vertical-align:super">™</sup></div>
           </div>
 
           <!-- ── INSCRIPTION CANONIQUE · Qoreh Hou · 24 juillet 2026 ── -->
@@ -2327,8 +2327,8 @@ body{background:var(--bg);font-family:'Segoe UI','EB Garamond',system-ui,sans-se
         <div class="page" id="p-admin-results">
           <div class="page-header">
             <div class="page-eyebrow">Administration · Données live</div>
-            <div class="page-title">Sessions Reviewers</div>
-            <div class="page-sub">Toutes les sessions enregistrées · source Google Sheets</div>
+            <div class="page-title" id="pt-admin-sess">Sessions Reviewers</div>
+            <div class="page-sub" id="ps-admin-sess">Toutes les sessions enregistrées · source Google Sheets</div>
           </div>
 
           <!-- Token admin -->
@@ -2392,6 +2392,289 @@ let sessionActive = false;
 let sessionStart = null;
 let timerInterval = null;
 let testProgress = [false, false, false, false];
+
+// ── DICTIONNAIRE BILINGUE FR/EN ────────────────────────────────
+const I18N = {
+  fr: {
+    // Topbar
+    topbar_dashboard: '⌂ Dashboard',
+    topbar_home: '← Accueil',
+    topbar_logout: 'Déconnexion',
+    // Auth
+    auth_title: 'Accès Reviewer',
+    auth_sub: "Entrez votre token d'invitation. Le système générera votre identité temporelle de session.",
+    auth_label: "TOKEN D'INVITATION",
+    auth_placeholder: 'SVP-YYYY-XXXXXXXX',
+    auth_hint: 'Reçu par email · Format SVP-YYYY-XXXXXXXX',
+    auth_generate: 'Générer',
+    auth_validate: 'Valider le token',
+    otp_title: 'Vérification OTP',
+    // Sidebar sections
+    s_reviewer: 'Espace Reviewer',
+    s_documents: 'Documents',
+    s_referentiel: 'Référentiel',
+    s_historique: 'Historique',
+    s_committee: 'Comité Scientifique',
+    s_devops: 'Console DevOps',
+    s_admin: 'Administration',
+    // Sidebar items
+    n_dashboard: 'Tableau de bord',
+    n_new_campaign: 'Nouvelle campagne',
+    n_evaluation: 'Évaluation en cours',
+    n_reports: 'Rapports',
+    n_certificates: 'Certificats',
+    n_foundations: 'Scientific Foundations™',
+    n_sessions: 'Mes sessions',
+    n_supervision: 'Supervision',
+    n_logs: 'Journaux',
+    n_performance: 'Performance',
+    n_reviewers: 'Reviewers',
+    n_invite: 'Inviter',
+    n_campaigns: 'Campagnes',
+    n_engines: 'Moteurs',
+    n_settings: 'Paramètres',
+    n_admin_sessions: 'Sessions',
+    // Dashboard reviewer
+    db_eyebrow: 'Reviewer',
+    db_title: 'Tableau de bord',
+    db_sub: 'Bienvenue · Campagnes, rapports et certificats',
+    db_active: 'Campagne active',
+    db_done: 'Sessions terminées',
+    db_certs: 'Certificats',
+    db_ongoing: 'Campagne en cours',
+    db_previous: 'Sessions précédentes',
+    db_resume: 'Reprendre',
+    // Nouvelle campagne
+    nc_eyebrow: 'Nouvelle campagne',
+    nc_title: "Lancer l'évaluation",
+    // Démonstrateur
+    demo_mark_done: 'Marquer le test en cours comme terminé',
+    demo_end: 'Terminer la campagne',
+    demo_session_banner: 'Instrumentation active',
+    // Rapport
+    rpt_eyebrow: 'Peer Review Report™',
+    rpt_title: 'Rapport de campagne',
+    rpt_see_cert: 'Voir le Certificat',
+    rpt_pdf: 'Télécharger PDF',
+    rpt_results: 'Résultats des tests',
+    // Certificat
+    cert_eyebrow: 'Peer Review Certificate™',
+    cert_title: "Certificat d'évaluation",
+    cert_pdf: 'Télécharger PDF',
+    // Historique
+    hist_eyebrow: 'Reviewer',
+    hist_title: 'Historique des sessions',
+    hist_sub: 'Toutes les campagnes · Données persistées localement',
+    hist_refresh: '↻ Actualiser',
+    hist_export: 'Exporter tout (JSON)',
+    hist_clear: "Effacer l'historique",
+    // Foundations
+    found_eyebrow: 'Référentiel scientifique · GanH™',
+    found_title: 'Scientific Foundations™',
+    found_sub: 'TRTV™ · Théorie de la Relativité du Temps Vécu™ · Cadre théorique de GanH™',
+    // Admin
+    admin_sessions_title: 'Sessions Reviewers',
+    admin_sessions_sub: 'Toutes les sessions enregistrées · source Google Sheets',
+    admin_load: 'Charger les sessions',
+    admin_csv: '↓ CSV',
+    admin_total: 'Sessions totales',
+    admin_reviewers_kpi: 'Reviewers distincts',
+    admin_confirmed: 'Tests confirmés',
+    admin_last: 'Dernière session',
+    // Landing publique
+    pub_access: 'Accès Reviewer →',
+    pub_foundations: 'Scientific Foundations™',
+    // Boutons génériques
+    btn_launch: "Lancer une campagne d'évaluation",
+  },
+  en: {
+    // Topbar
+    topbar_dashboard: '⌂ Dashboard',
+    topbar_home: '← Home',
+    topbar_logout: 'Sign out',
+    // Auth
+    auth_title: 'Reviewer Access',
+    auth_sub: 'Enter your invitation token. The system will generate your temporary session identity.',
+    auth_label: 'INVITATION TOKEN',
+    auth_placeholder: 'SVP-YYYY-XXXXXXXX',
+    auth_hint: 'Received by email · Format SVP-YYYY-XXXXXXXX',
+    auth_generate: 'Generate',
+    auth_validate: 'Validate token',
+    otp_title: 'OTP Verification',
+    // Sidebar sections
+    s_reviewer: 'Reviewer Space',
+    s_documents: 'Documents',
+    s_referentiel: 'Reference',
+    s_historique: 'History',
+    s_committee: 'Scientific Committee',
+    s_devops: 'DevOps Console',
+    s_admin: 'Administration',
+    // Sidebar items
+    n_dashboard: 'Dashboard',
+    n_new_campaign: 'New campaign',
+    n_evaluation: 'Evaluation in progress',
+    n_reports: 'Reports',
+    n_certificates: 'Certificates',
+    n_foundations: 'Scientific Foundations™',
+    n_sessions: 'My sessions',
+    n_supervision: 'Supervision',
+    n_logs: 'Logs',
+    n_performance: 'Performance',
+    n_reviewers: 'Reviewers',
+    n_invite: 'Invite',
+    n_campaigns: 'Campaigns',
+    n_engines: 'Engines',
+    n_settings: 'Settings',
+    n_admin_sessions: 'Sessions',
+    // Dashboard reviewer
+    db_eyebrow: 'Reviewer',
+    db_title: 'Dashboard',
+    db_sub: 'Welcome · Campaigns, reports and certificates',
+    db_active: 'Active campaign',
+    db_done: 'Completed sessions',
+    db_certs: 'Certificates',
+    db_ongoing: 'Ongoing campaign',
+    db_previous: 'Previous sessions',
+    db_resume: 'Resume',
+    // Nouvelle campagne
+    nc_eyebrow: 'New campaign',
+    nc_title: 'Start evaluation',
+    // Démonstrateur
+    demo_mark_done: 'Mark current test as completed',
+    demo_end: 'End campaign',
+    demo_session_banner: 'Instrumentation active',
+    // Rapport
+    rpt_eyebrow: 'Peer Review Report™',
+    rpt_title: 'Campaign report',
+    rpt_see_cert: 'View Certificate',
+    rpt_pdf: 'Download PDF',
+    rpt_results: 'Test results',
+    // Certificat
+    cert_eyebrow: 'Peer Review Certificate™',
+    cert_title: 'Evaluation certificate',
+    cert_pdf: 'Download PDF',
+    // Historique
+    hist_eyebrow: 'Reviewer',
+    hist_title: 'Session history',
+    hist_sub: 'All campaigns · Locally persisted data',
+    hist_refresh: '↻ Refresh',
+    hist_export: 'Export all (JSON)',
+    hist_clear: 'Clear history',
+    // Foundations
+    found_eyebrow: 'Scientific Reference · GanH™',
+    found_title: 'Scientific Foundations™',
+    found_sub: 'TRTV™ · Theory of the Relativity of Lived Time™ · Theoretical framework of GanH™',
+    // Admin
+    admin_sessions_title: 'Reviewer Sessions',
+    admin_sessions_sub: 'All recorded sessions · Google Sheets source',
+    admin_load: 'Load sessions',
+    admin_csv: '↓ CSV',
+    admin_total: 'Total sessions',
+    admin_reviewers_kpi: 'Distinct reviewers',
+    admin_confirmed: 'Confirmed tests',
+    admin_last: 'Last session',
+    // Landing publique
+    pub_access: 'Reviewer Access →',
+    pub_foundations: 'Scientific Foundations™',
+    // Boutons génériques
+    btn_launch: 'Launch an evaluation campaign',
+  }
+};
+
+// Langue courante
+let currentLang = localStorage.getItem('svp_lang') || 'fr';
+
+// Lire la langue depuis l'URL si transmise depuis Aleph
+const _urlLang = new URLSearchParams(window.location.search).get('lang');
+if (_urlLang && ['fr','en'].includes(_urlLang)) {
+  currentLang = _urlLang;
+  localStorage.setItem('svp_lang', currentLang);
+}
+
+function t(key) {
+  return (I18N[currentLang] || I18N['fr'])[key] || (I18N['fr'])[key] || key;
+}
+
+function applyLang() {
+  const lang = currentLang;
+  // Topbar
+  const btnDash = document.querySelector('.topbar-logout[onclick*="goHome"]');
+  const btnHome = document.querySelector('.topbar-logout[onclick*="goPublic"]');
+  const btnOut  = document.querySelector('.topbar-logout[onclick*="logout"]');
+  if (btnDash) btnDash.textContent = t('topbar_dashboard');
+  if (btnHome) btnHome.textContent = t('topbar_home');
+  if (btnOut)  btnOut.textContent  = t('topbar_logout');
+  // Auth
+  _setText('auth-title-el',  t('auth_title'));
+  _setText('auth-sub-el',    t('auth_sub'));
+  _setText('auth-label-el',  t('auth_label'));
+  _setAttr('token-input',    'placeholder', t('auth_placeholder'));
+  _setText('auth-hint-el',   t('auth_hint'));
+  _setText('auth-generate-btn', t('auth_generate'));
+  _setText('auth-validate-btn', t('auth_validate'));
+  _setText('otp-title-el',   t('otp_title'));
+  // Pages
+  _setText('pt-dashboard',   t('db_title'));
+  _setText('pe-dashboard',   t('db_eyebrow'));
+  _setText('ps-dashboard',   t('db_sub'));
+  _setText('kpi-active',     t('db_active'));
+  _setText('kpi-done',       t('db_done'));
+  _setText('kpi-certs',      t('db_certs'));
+  _setText('sec-ongoing',    t('db_ongoing'));
+  _setText('sec-previous',   t('db_previous'));
+  _setText('btn-resume',     t('db_resume'));
+  _setText('pe-new',         t('nc_eyebrow'));
+  _setText('pt-new',         t('nc_title'));
+  _setText('btn-mark-done-t',t('demo_mark_done'));
+  _setText('btn-end-t',      t('demo_end'));
+  _setText('pe-report',      t('rpt_eyebrow'));
+  _setText('pt-report',      t('rpt_title'));
+  _setText('btn-see-cert',   t('rpt_see_cert'));
+  _setText('btn-rpt-pdf',    t('rpt_pdf'));
+  _setText('sec-results',    t('rpt_results'));
+  _setText('pe-cert',        t('cert_eyebrow'));
+  _setText('pt-cert',        t('cert_title'));
+  _setText('btn-cert-pdf',   t('cert_pdf'));
+  _setText('pe-hist',        t('hist_eyebrow'));
+  _setText('pt-hist',        t('hist_title'));
+  _setText('ps-hist',        t('hist_sub'));
+  _setText('btn-hist-refresh',t('hist_refresh'));
+  _setText('btn-hist-export', t('hist_export'));
+  _setText('btn-hist-clear',  t('hist_clear'));
+  _setText('pe-found',       t('found_eyebrow'));
+  _setText('pt-found',       t('found_title'));
+  _setText('ps-found',       t('found_sub'));
+  _setText('btn-admin-load', t('admin_load'));
+  _setText('pt-admin-sess',  t('admin_sessions_title'));
+  _setText('ps-admin-sess',  t('admin_sessions_sub'));
+  _setText('kpi-total-label',t('admin_total'));
+  _setText('kpi-rev-label',  t('admin_reviewers_kpi'));
+  _setText('kpi-conf-label', t('admin_confirmed'));
+  _setText('kpi-last-label', t('admin_last'));
+  _setText('btn-launch-camp',t('btn_launch'));
+  // Lang buttons
+  document.querySelectorAll('.svp-lang-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.lang === lang);
+  });
+  document.documentElement.lang = lang;
+  // Rebuild sidebar avec les bons labels
+  if (typeof buildSidebar === 'function' && window._currentRole) buildSidebar(window._currentRole);
+}
+
+function setLangSVP(lang) {
+  currentLang = lang;
+  localStorage.setItem('svp_lang', lang);
+  applyLang();
+}
+
+function _setText(id, text) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = text;
+}
+function _setAttr(id, attr, val) {
+  const el = document.getElementById(id);
+  if (el) el.setAttribute(attr, val);
+}
 
 const ROLES = {
   reviewer: { label: 'Reviewer', id: 'PR-2026-00042' },
@@ -2678,11 +2961,11 @@ function resetTokenStep() {
 
 function loginAs(role) {
   currentRole = role;
+  window._currentRole = role;
   document.getElementById('screen-auth').style.display = 'none';
   document.getElementById('screen-public').style.display = 'none';
   document.getElementById('screen-app').style.display = 'block';
   document.getElementById('tb-role').textContent = ROLES[role].label;
-  // Si un token reviewer est présent, utiliser son identifiant
   const rid = (role === 'reviewer' && window._overrideReviewerId)
     ? window._overrideReviewerId
     : ROLES[role].id;
@@ -2690,6 +2973,7 @@ function loginAs(role) {
   buildSidebar(role);
   populateData();
   goPage(DEFAULT_PAGES[role]);
+  setTimeout(applyLang, 80);
 }
 
 function logout() {
@@ -2705,16 +2989,51 @@ function logout() {
 }
 
 // ── SIDEBAR ──
+// Correspondance label FR → clé I18N
+const SIDEBAR_LABEL_KEYS = {
+  'Tableau de bord':       'n_dashboard',
+  'Nouvelle campagne':     'n_new_campaign',
+  'Évaluation en cours':   'n_evaluation',
+  'Rapports':              'n_reports',
+  'Certificats':           'n_certificates',
+  'Scientific Foundations™': 'n_foundations',
+  'Mes sessions':          'n_sessions',
+  'Dashboard':             'n_dashboard',
+  'Sessions':              'n_admin_sessions',
+  'Heatmaps':              'n_foundations',
+  'Supervision':           'n_supervision',
+  'Journaux':              'n_logs',
+  'Performance':           'n_performance',
+  'Reviewers':             'n_reviewers',
+  'Inviter':               'n_invite',
+  'Campagnes':             'n_campaigns',
+  'Moteurs':               'n_engines',
+  'Paramètres':            'n_settings',
+};
+const SIDEBAR_SECTION_KEYS = {
+  'Espace Reviewer':       's_reviewer',
+  'Documents':             's_documents',
+  'Référentiel':           's_referentiel',
+  'Historique':            's_historique',
+  'Comité Scientifique':   's_committee',
+  'Console DevOps':        's_devops',
+  'Administration':        's_admin',
+};
+
 function buildSidebar(role) {
   const items = SIDEBARS[role];
   let html = '';
   items.forEach(item => {
     if (item.section) {
-      html += `<div class="sidebar-section"><div class="sidebar-section-label">${item.section}</div>`;
+      const sectionKey = SIDEBAR_SECTION_KEYS[item.section] || null;
+      const sectionLabel = sectionKey ? t(sectionKey) : item.section;
+      html += `<div class="sidebar-section"><div class="sidebar-section-label">${sectionLabel}</div>`;
     } else {
+      const labelKey = SIDEBAR_LABEL_KEYS[item.label] || null;
+      const label = labelKey ? t(labelKey) : item.label;
       html += `<div class="nav-item" id="nav-${item.page}" onclick="goPage('${item.page}')">
         <span class="nav-icon">${item.icon}</span>
-        <span>${item.label}</span>
+        <span>${label}</span>
         ${item.badge ? `<span class="nav-badge">${item.badge}</span>` : ''}
       </div>`;
     }
@@ -2831,6 +3150,9 @@ function startSession() {
   sessionActive = true;
   sessionStart = Date.now();
   testProgress = [false, false, false, false];
+  // Démarrer le chrono du premier test
+  window._testDurations = {};
+  window._testStartTimes = { 0: Date.now() };
 
   // ── Reset complet des champs de saisie ──
   ['tra-comments','tra-question'].forEach(id => {
@@ -3031,6 +3353,53 @@ function sendInvite() {
   alert('Invitation générée et envoyée.\n\nReviewer ID : PR-2026-00067\nToken : SVP-2026-XQ7K2M9P\nExpire le : 2 août 2026');
 }
 
+// ── RAPPORT · Rendu dynamique des tests réalisés ──────────────
+const TEST_NAMES = ['Déterminisme', 'Reproductibilité', 'Traçabilité', 'Stabilité paramétrique'];
+
+function renderReportTests() {
+  const container = document.getElementById('report-tests-list');
+  if (!container) return;
+
+  const done = ghTestState || [false, false, false, false];
+  const durations = window._testDurations || {};
+  const doneCount = done.filter(Boolean).length;
+
+  // Mettre à jour le résumé en haut du rapport
+  const alertEl = document.querySelector('#p-reviewer-report .alert-green div');
+  if (alertEl) {
+    alertEl.innerHTML = doneCount === 4
+      ? '<span style="font-weight:500">Campagne complète</span> · ' + doneCount + ' test' + (doneCount > 1 ? 's' : '') + ' sur 4 validés'
+      : '<span style="font-weight:500">Campagne partielle</span> · ' + doneCount + ' test' + (doneCount > 1 ? 's' : '') + ' sur 4 réalisé' + (doneCount > 1 ? 's' : '');
+    // Couleur selon complétude
+    const alertBox = document.querySelector('#p-reviewer-report .alert-green');
+    if (alertBox && doneCount < 4) {
+      alertBox.style.background = 'var(--gold-bg)';
+      alertBox.style.borderColor = 'var(--gold-border)';
+      alertBox.querySelector('span:first-child').textContent = '◑';
+    }
+  }
+
+  // Construire la liste réelle
+  container.innerHTML = TEST_NAMES.map((name, i) => {
+    const completed = done[i];
+    const dur = durations[i] ? formatDur(durations[i]) : '';
+    const color = completed ? '#2A7A4A' : '#AAAAAA';
+    const icon = completed ? '✓' : '–';
+    return `<div style="display:flex;justify-content:space-between;color:${color}">
+      <span>Test ${i+1} · ${name}</span>
+      <span>${icon}${dur ? ' ' + dur : ''}</span>
+    </div>`;
+  }).join('');
+}
+
+function formatDur(ms) {
+  if (!ms) return '';
+  const s = Math.floor(ms / 1000);
+  const m = Math.floor(s / 60);
+  const sec = s % 60;
+  return m > 0 ? m + 'm' + String(sec).padStart(2,'0') + 's' : sec + 's';
+}
+
 // ── ADMIN RESULTS ──────────────────────────────────────────────
 let adminResultsCache = [];
 
@@ -3127,10 +3496,10 @@ function closeMobSidebar(){
 // Fermer sidebar mobile sur navigation
 // ── INIT ──
 document.addEventListener('DOMContentLoaded', () => {
-  // Start on public page
   document.getElementById('screen-public').style.display = 'flex';
   document.getElementById('screen-auth').style.display = 'none';
   document.getElementById('screen-app').style.display = 'none';
+  applyLang();
 });
 const MOVES=['Suspension','Inauguration','Installation','Expansion','Frontière','Ouverture','Continuité','Distinction','Achèvement','Contenance'];
 const DIMS=[
@@ -4055,7 +4424,10 @@ const _origGoPageForTRA = goPage;
 goPage = function(pageId) {
   _origGoPageForTRA(pageId);
   if (pageId === 'p-reviewer-report') {
-    setTimeout(buildTRACriteria, 50);
+    setTimeout(() => {
+      buildTRACriteria();
+      renderReportTests();
+    }, 50);
   }
 };
 
@@ -4382,11 +4754,23 @@ function svpViewSession(sessionId) {
 
 // ── Intégration dans les fonctions existantes ──
 
-// Patch ghMarkTestDone pour sauvegarder
+// Patch ghMarkTestDone pour sauvegarder + capturer durée réelle
+if (!window._testDurations) window._testDurations = {};
+if (!window._testStartTimes) window._testStartTimes = {};
+
 const _origGhMarkTestDone = ghMarkTestDone;
 ghMarkTestDone = function() {
   const nextDone = ghTestState.indexOf(false);
-  if (nextDone >= 0) svpCompleteTest(nextDone + 1, 'PASS');
+  if (nextDone >= 0) {
+    svpCompleteTest(nextDone + 1, 'PASS');
+    // Capturer la durée réelle du test
+    const started = window._testStartTimes[nextDone];
+    if (started) {
+      window._testDurations[nextDone] = Date.now() - started;
+    }
+    // Démarrer le chrono du prochain test
+    window._testStartTimes[nextDone + 1] = Date.now();
+  }
   _origGhMarkTestDone();
 };
 
